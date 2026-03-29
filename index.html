@@ -24,14 +24,15 @@
             --glass-border: rgba(255,255,255,0.18);
         }
 
-        html { scroll-behavior: smooth; }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
 
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
             background: #0d0608;
             color: var(--cream);
-            min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
         }
 
@@ -69,12 +70,14 @@
         .page {
             position: relative;
             z-index: 3;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: clamp(24px, 5vw, 60px) clamp(16px, 4vw, 40px);
-            gap: clamp(28px, 5vw, 48px);
+            justify-content: center;
+            padding: clamp(10px, 2vh, 32px) clamp(14px, 3vw, 40px);
+            gap: clamp(8px, 1.6vh, 24px);
+            overflow: hidden;
         }
 
         /* ── HEADER ── */
@@ -85,11 +88,11 @@
 
         .header-eyebrow {
             font-family: 'Cinzel', serif;
-            font-size: clamp(0.6rem, 1.8vw, 0.85rem);
+            font-size: clamp(0.55rem, 1.4vw, 0.8rem);
             letter-spacing: 0.35em;
             color: var(--gold);
             text-transform: uppercase;
-            margin-bottom: clamp(10px, 2vw, 18px);
+            margin-bottom: clamp(6px, 1vh, 12px);
             opacity: 0.9;
         }
 
@@ -129,9 +132,9 @@
         }
 
         .header-tagline {
-            margin-top: clamp(10px, 2vw, 18px);
+            margin-top: clamp(4px, 1vh, 12px);
             font-style: italic;
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-size: clamp(0.85rem, 2vw, 1.25rem);
             font-weight: 300;
             color: var(--gold-light);
             opacity: 0.85;
@@ -165,8 +168,8 @@
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: clamp(28px, 5vw, 52px) clamp(20px, 4vw, 48px);
+            border-radius: 28px;
+            padding: clamp(14px, 2.5vh, 36px) clamp(18px, 3vw, 48px);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -183,30 +186,30 @@
 
         .counter-label {
             font-family: 'Cinzel', serif;
-            font-size: clamp(0.6rem, 1.6vw, 0.78rem);
+            font-size: clamp(0.55rem, 1.3vw, 0.75rem);
             letter-spacing: 0.3em;
             color: var(--gold);
             text-transform: uppercase;
-            margin-bottom: clamp(20px, 3vw, 32px);
+            margin-bottom: clamp(10px, 2vh, 24px);
         }
 
         .counter-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: clamp(10px, 2vw, 20px);
+            gap: clamp(8px, 1.5vw, 20px);
         }
 
         .time-unit {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .time-val {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-size: clamp(2.2rem, 6vw, 4.8rem);
             line-height: 1;
             background: linear-gradient(160deg, #fff 30%, var(--gold-light) 100%);
             -webkit-background-clip: text;
@@ -244,8 +247,8 @@
 
         /* Also show total seconds in a sub row */
         .total-seconds {
-            margin-top: clamp(16px, 3vw, 28px);
-            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+            margin-top: clamp(8px, 1.5vh, 20px);
+            font-size: clamp(0.65rem, 1.5vw, 0.88rem);
             color: var(--gold-light);
             opacity: 0.7;
             font-style: italic;
@@ -264,8 +267,8 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: clamp(24px, 4vw, 44px) clamp(24px, 5vw, 52px);
+            border-radius: 20px;
+            padding: clamp(14px, 2.5vh, 36px) clamp(20px, 4vw, 48px);
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -308,8 +311,8 @@
 
         .quote-hint {
             text-align: center;
-            margin-top: 14px;
-            font-size: clamp(0.6rem, 1.4vw, 0.72rem);
+            margin-top: 8px;
+            font-size: clamp(0.55rem, 1.2vw, 0.7rem);
             letter-spacing: 0.2em;
             color: var(--gold);
             opacity: 0.5;
@@ -345,6 +348,118 @@
             .counter-grid { grid-template-columns: repeat(2, 1fr); }
             .time-divider { display: none; }
             .names-row { gap: 8px; }
+        }
+
+        /* ── BIRTHDAY BANNER ── */
+        #bday-banner {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            background: rgba(13,6,8,0.75);
+            backdrop-filter: blur(8px);
+            animation: fadeInBg 0.6s ease both;
+        }
+
+        #bday-banner.show { display: flex; }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .bday-card {
+            background: linear-gradient(135deg, rgba(201,106,133,0.18), rgba(212,170,112,0.14), rgba(168,216,240,0.12));
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 32px;
+            padding: clamp(32px, 5vw, 60px) clamp(28px, 5vw, 64px);
+            text-align: center;
+            max-width: min(520px, 90vw);
+            backdrop-filter: blur(20px);
+            position: relative;
+            animation: popIn 0.7s cubic-bezier(.22,1,.36,1) 0.3s both;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(201,106,133,0.2);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.85) translateY(20px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .bday-emoji {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            display: block;
+            margin-bottom: 12px;
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to   { transform: translateY(-10px); }
+        }
+
+        .bday-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(212,170,112,0.7);
+            margin-bottom: 8px;
+        }
+
+        .bday-name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.1rem, 3.5vw, 1.7rem);
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.12em;
+        }
+
+        .bday-name.waqar { color: #a8d8f0; }
+        .bday-name.saher { color: var(--rose); }
+
+        .bday-msg {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            font-weight: 300;
+            line-height: 1.75;
+            color: #f5ece8;
+            margin-bottom: 24px;
+            opacity: 0.9;
+        }
+
+        .bday-close {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.6rem, 1.5vw, 0.72rem);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.6;
+            cursor: pointer;
+            border: 1px solid rgba(212,170,112,0.3);
+            border-radius: 100px;
+            padding: 8px 22px;
+            background: transparent;
+            color: var(--gold);
+            transition: opacity 0.3s, border-color 0.3s;
+        }
+
+        .bday-close:hover { opacity: 1; border-color: rgba(212,170,112,0.7); }
+
+        /* confetti dots */
+        .confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 32px; }
+        .confetti i {
+            position: absolute;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+            opacity: 0;
+        }
+        @keyframes fall {
+            0%   { opacity: 1; transform: translateY(-10px) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(300px) rotate(360deg); }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -425,6 +540,18 @@
     </div>
 
 </main>
+
+<!-- BIRTHDAY BANNER -->
+<div id="bday-banner">
+    <div class="bday-card">
+        <div class="confetti" id="confetti"></div>
+        <span class="bday-emoji" id="bday-emoji">🎂</span>
+        <div class="bday-title">Happy Birthday</div>
+        <div class="bday-name" id="bday-name"></div>
+        <p class="bday-msg" id="bday-msg"></p>
+        <button class="bday-close" onclick="closeBday()">✦ Close ✦</button>
+    </div>
+</div>
 
 <script>
 /* ── QUOTES — 110 love lines ── */
@@ -651,6 +778,81 @@ setInterval(updateCounter, 1000);
     init();
     draw();
 })();
+
+/* ── BIRTHDAY LOGIC ── */
+const BIRTHDAYS = [
+    {
+        month: 3, day: 16,
+        name: 'WAQAR',
+        cls: 'waqar',
+        emoji: '🎂',
+        msg: 'Today is your special day, Waqar!\nMay this year bring you joy, laughter, and a lifetime of love with Saher. You are so deeply loved. 💙'
+    },
+    {
+        month: 5, day: 13,
+        name: 'SAHER',
+        cls: 'saher',
+        emoji: '🌸',
+        msg: 'Today is your special day, Saher!\nMay this birthday be as beautiful and radiant as you are. Waqar loves you more than words can say. 💕'
+    }
+];
+
+function checkBirthdays() {
+    const now = new Date();
+    const m = now.getMonth() + 1;
+    const d = now.getDate();
+    const dismissed = sessionStorage.getItem('bday-dismissed');
+
+    for (const b of BIRTHDAYS) {
+        if (b.month === m && b.day === d && dismissed !== b.name) {
+            showBday(b);
+            break;
+        }
+    }
+}
+
+function showBday(b) {
+    document.getElementById('bday-emoji').textContent = b.emoji;
+    document.getElementById('bday-name').textContent = b.name;
+    document.getElementById('bday-name').className = 'bday-name ' + b.cls;
+    document.getElementById('bday-msg').textContent = b.msg;
+
+    // sprinkle confetti dots
+    const container = document.getElementById('confetti');
+    container.innerHTML = '';
+    const colors = ['#e8a0b0','#d4aa70','#a8d8f0','#fff','#f0d5a0'];
+    for (let i = 0; i < 30; i++) {
+        const dot = document.createElement('i');
+        dot.style.cssText = `
+            left:${Math.random()*100}%;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+            animation-delay:${(Math.random()*3).toFixed(2)}s;
+            animation-duration:${(2+Math.random()*2).toFixed(2)}s;
+            width:${4+Math.random()*6}px;
+            height:${4+Math.random()*6}px;
+        `;
+        container.appendChild(dot);
+    }
+
+    const banner = document.getElementById('bday-banner');
+    banner.classList.add('show');
+}
+
+function closeBday() {
+    const banner = document.getElementById('bday-banner');
+    const name = document.getElementById('bday-name').textContent;
+    banner.style.opacity = 0;
+    banner.style.transition = 'opacity 0.4s';
+    setTimeout(() => {
+        banner.classList.remove('show');
+        banner.style.opacity = '';
+        banner.style.transition = '';
+    }, 400);
+    sessionStorage.setItem('bday-dismissed', name);
+}
+
+// Check on load (small delay so page renders first)
+setTimeout(checkBirthdays, 1200);
 </script>
 </body>
 </html>
